@@ -14,7 +14,7 @@ namespace MovieReviews.Database
         public MovieRepository(ApplicationContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
+           // _context.Database.EnsureCreated();
         }
 
         public Task<Movie> GetMovieByIdAsync(Guid id)
