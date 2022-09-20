@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MovieReviews.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReviews.Models
+namespace MovieReviews.Entities
 {
     public class Job
     {
@@ -13,8 +14,8 @@ namespace MovieReviews.Models
         public Company Company { get; set; }
         public int? CompanyId { get; set; }
 
-        [ForeignKey("PostedById")]
-        public virtual User PostedBy { get; set; }
-        public string PostedById { get; set; }    
+        //[ForeignKey("PostedById")]
+        //public virtual User PostedBy { get; set; }
+        //public int PostedById { get; set; }
     }
 }

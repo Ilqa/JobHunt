@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MovieReviews.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReviews.Models
+namespace MovieReviews.Entities
 {
-    public class User : IdentityUser<string>
+    public class User : IdentityUser<int>
     {
         [MaxLength(256)]
         public string FirstName { get; set; }

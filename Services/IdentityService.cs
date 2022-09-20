@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviews.Configurations;
+using MovieReviews.Entities;
+using MovieReviews.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,12 +16,12 @@ namespace BooksBot.API.Services
 {
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<UserType> _roleManager;
         private readonly JwtSettings _jwtSettings;
 
         public IdentityService(
-            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, JwtSettings jwtSettings)
+            UserManager<User> userManager, RoleManager<UserType> roleManager, JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -27,17 +29,22 @@ namespace BooksBot.API.Services
         }
 
 
-        public async Task<string> Login(string email, string password)
+        public async Task<TokenResponse> Login(TokenRequest model)
         {
+            TokenResponse response = new();
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                response.Message = "User Not Found.";
+                return response;
+            }
 
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return string.Empty;
-
-
-            var passwordValid = await _userManager.CheckPasswordAsync(user, password);
+            var passwordValid = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordValid)
-                return string.Empty;
-
+            {
+                response.Message = "Invalid Credentials.";
+                return response;
+            }
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
@@ -57,7 +64,8 @@ namespace BooksBot.API.Services
             claims: authClaims,
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
-            return new JwtSecurityTokenHandler().WriteToken(token);
+
+            return (new TokenResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true });
 
 
         }
