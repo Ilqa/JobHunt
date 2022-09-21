@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GenPsych.Application.Extensions;
 using GenPsych.Application.Responses.Identity;
+using JobHunt.Database.Entities;
+using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -116,31 +118,49 @@ namespace MovieReviews.Services
             //}
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (userWithSameEmail == null)
-            {
-                var result = await _userManager.CreateAsync(user, request.Password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, request.Role);
-                    //if (!request.AutoConfirmEmail)
-                    //{
-                    //    var verificationUri = await SendVerificationEmail(user, origin);
-                    //    var mailRequest = new MailRequest
-                    //    {
-                    //        To = user.Email,
-                    //        Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.",
-                    //        Subject = "Confirm Registration"
-                    //    };
-                    //    _mailService.SendAsync(mailRequest);
-                    //    return await Result<string>.SuccessAsync(user.Id, string.Format("User {0} Registered. Please check your Mailbox to verify!", user.UserName));
-                    //}
-                    return string.Format("User {0} Registered.", user.UserName);
-                }
+            if (userWithSameEmail != null)
+                return string.Format("Email {0} is already registered.", request.Email);
 
-                // return await Result.FailAsync(result.Errors.Select(a => a.Description.ToString()).ToList());
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, request.Role);
+                //if (!request.AutoConfirmEmail)
+                //{
+                //    var verificationUri = await SendVerificationEmail(user, origin);
+                //    var mailRequest = new MailRequest
+                //    {
+                //        To = user.Email,
+                //        Body = $"Please confirm your account by <a href='{verificationUri}'>clicking here</a>.",
+                //        Subject = "Confirm Registration"
+                //    };
+                //    _mailService.SendAsync(mailRequest);
+                //    return await Result<string>.SuccessAsync(user.Id, string.Format("User {0} Registered. Please check your Mailbox to verify!", user.UserName));
+                //}
+                return string.Format("User {0} Registered.", user.UserName);
             }
 
-            return string.Format("Email {0} is already registered.", request.Email);
+            return string.Join(',', result.Errors.Select(a => a.Description.ToString()));
+
+
+
+        }
+
+        public async Task<string> ChangePasswordAsync(ChangePasswordRequest request)
+        {
+            if (request.Password == request.NewPassword)
+                return "New password cannot be equal to old password.";
+
+            var user = await this._userManager.FindByIdAsync(request.UserId.ToString());
+            if (user == null)
+                return "User Not Found.";
+
+            var identityResult = await this._userManager.ChangePasswordAsync(
+                user,
+                request.Password,
+                request.NewPassword);
+            var errors = identityResult.Errors.Select(e => e.Description.ToString()).ToList();
+            return identityResult.Succeeded ? "Password Updated Successfully" : string.Join(", ", identityResult.Errors.Select(e => e.Description.ToString()).ToList());
         }
 
 

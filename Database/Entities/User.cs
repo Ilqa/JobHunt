@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReviews.Entities
+namespace JobHunt.Database.Entities
 {
     public class User : IdentityUser<int>
     {
@@ -14,14 +14,6 @@ namespace MovieReviews.Entities
         [MaxLength(256)]
         public string LastName { get; set; }
         public bool IsActive { get; set; }
-        [MaxLength(256)]
-        public string Region { get; set; }
-        [MaxLength(256)]
-        public string AvailableRegions { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public Company Company { get; set; }
-        public int? CompanyId { get; set; }
 
 
         //public string CreatedBy { get; set; }
@@ -38,7 +30,7 @@ namespace MovieReviews.Entities
 
         //public string RefreshToken { get; set; }
         //public DateTime RefreshTokenExpiryTime { get; set; }
-        //public string Address { get; set; }
+        //
 
     }
 }

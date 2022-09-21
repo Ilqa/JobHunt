@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GenPsych.Application.Responses.Identity;
-using MovieReviews.Entities;
+using JobHunt.Database.Entities;
 
 namespace GenPsych.Infrastructure.Mappings
 {

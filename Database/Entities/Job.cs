@@ -1,9 +1,10 @@
-﻿using MovieReviews.Models;
+﻿using JobHunt.Database.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieReviews.Entities
 {
-    public class Job
+    public class Job : IAuditableEntity
     {
         public int Id { get; set; }
         public string Description { get; set; }
@@ -13,6 +14,8 @@ namespace MovieReviews.Entities
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
         public int? CompanyId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         //[ForeignKey("PostedById")]
         //public virtual User PostedBy { get; set; }

@@ -1,5 +1,6 @@
 ﻿
 using BooksBot.API.Services;
+using JobHunt.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using MovieReviews.Entities;

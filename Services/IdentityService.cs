@@ -1,4 +1,5 @@
 ﻿
+using JobHunt.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviews.Configurations;

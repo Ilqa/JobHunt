@@ -1,4 +1,5 @@
 ﻿using GenPsych.Application.Responses.Identity;
+using JobHunt.DTO.Identity;
 using MovieReviews.DTO.Identity;
 using MovieReviews.Wrappers;
 using System.Threading.Tasks;
@@ -12,11 +13,14 @@ namespace MovieReviews.Services
         Task<PaginatedResult<UserDto>> GetAllAsync(int pageNumber, int pageSize, string sortField,
             string sortOrder, string searchText);
 
+        Task<string> ChangePasswordAsync(ChangePasswordRequest model);
+
+        Task<string> RegisterAsync(RegisterUser request, string origin);
         Task<int> GetCountAsync();
 
         //Task<IResult<UserResponse>> GetAsync(string userId);
 
-        Task<string> RegisterAsync(RegisterUser request, string origin);
+       
 
         //Task<IResult<string>> CreateUser(CreateUpdateUserRequest request);
 

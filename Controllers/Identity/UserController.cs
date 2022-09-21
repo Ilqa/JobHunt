@@ -1,4 +1,5 @@
 ﻿using GenPsych.Application.Responses.Identity;
+using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviews.DTO.Identity;
@@ -56,6 +57,14 @@ namespace GenPsych.Api.Controllers.Identity
         {
             var origin = Request.Headers["origin"];
             return await _userService.RegisterAsync(request, origin);
+        }
+
+        
+        [HttpPost("ChangePassword")]
+        public async Task<string> ChangePassword(ChangePasswordRequest request)
+        {
+            //var origin = Request.Headers["origin"];
+            return await _userService.ChangePasswordAsync(request);
         }
 
         //[HttpPost("create-user")]

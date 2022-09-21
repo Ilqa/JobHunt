@@ -18,7 +18,7 @@ using MovieReviews.Services;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
-
+using JobHunt.Database.Entities;
 
 namespace MovieReviews
 {
