@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace GenPsych.Application.Responses.Identity
+namespace JobHunt.DTO.Identity
 {
     public class UserDto
     {

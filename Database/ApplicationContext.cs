@@ -19,6 +19,9 @@ namespace MovieReviews.Database
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserEducation> UserEducation { get; set; }
+        public DbSet<UserExperience> UserExperiences { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
-using GenPsych.Application.Responses.Identity;
-using JobHunt.Database.Entities;
 
-namespace GenPsych.Infrastructure.Mappings
+using JobHunt.Database.Entities;
+using JobHunt.DTO;
+using JobHunt.DTO.Identity;
+
+namespace JobHunt.Mappings
 {
     public class UserProfile : Profile
     {
         public UserProfile()
         {
             CreateMap<UserDto, User>().ReverseMap();
-            //CreateMap<, User>().ReverseMap();
+            CreateMap<JobHunt.Database.Entities.UserProfile, UserProfileDto>().ReverseMap();
         }
     }
 }

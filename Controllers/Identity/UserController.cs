@@ -1,5 +1,4 @@
-﻿using GenPsych.Application.Responses.Identity;
-using JobHunt.DTO.Identity;
+﻿using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviews.DTO.Identity;

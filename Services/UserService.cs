@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GenPsych.Application.Extensions;
-using GenPsych.Application.Responses.Identity;
 using JobHunt.Database.Entities;
 using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Http;

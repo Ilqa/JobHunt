@@ -1,5 +1,4 @@
-﻿using GenPsych.Application.Responses.Identity;
-using JobHunt.DTO.Identity;
+﻿using JobHunt.DTO.Identity;
 using MovieReviews.DTO.Identity;
 using MovieReviews.Wrappers;
 using System.Threading.Tasks;

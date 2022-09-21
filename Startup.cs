@@ -1,4 +1,6 @@
 using BooksBot.API.Services;
+using JobHunt.Database.Entities;
+using JobHunt.Database.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -12,13 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieReviews.Configurations;
 using MovieReviews.Database;
-using MovieReviews.Database.Repositories;
 using MovieReviews.Entities;
 using MovieReviews.Services;
-using System.Reflection;
 using System.Text;
-using AutoMapper;
-using JobHunt.Database.Entities;
 
 namespace MovieReviews
 {
@@ -152,6 +150,9 @@ namespace MovieReviews
             //services.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
             //services.RegisterType<QueryObject>().AsSelf().SingleInstance();

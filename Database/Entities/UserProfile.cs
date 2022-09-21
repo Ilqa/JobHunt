@@ -7,7 +7,7 @@ namespace JobHunt.Database.Entities
     public class UserProfile : IAuditableEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProfileId { get; set; } 
+        public int Id { get; set; } 
 
         [MaxLength(256)]
         public string Region { get; set; }
