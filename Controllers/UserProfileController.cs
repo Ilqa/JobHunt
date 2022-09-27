@@ -28,9 +28,6 @@ namespace JobHunt.Controllers
         [HttpPost]
         public async Task<string> CreateUserProfile(UserProfileDto profile)
         {
-            //var httpRequest = HttpContext.Request;
-            //var file = HttpContext.Request.Form.Files.GetFile("CrawlSourceData.xls");
-            ;
             await _repository.CreateProfileAsync(_mapper.Map<UserProfile>(profile));
             return "Profile Created";
         }
@@ -38,9 +35,6 @@ namespace JobHunt.Controllers
         [HttpPost("UploadFile")]
         public async Task<string> UploadVideoResume(IFormFile file, int userId)
         {
-            //var httpRequest = HttpContext.Request;
-            //var file = HttpContext.Request.Form.Files.GetFile("CrawlSourceData.xls");
-
             return await _repository.UploadFile(userId, file);
         }       
     }
