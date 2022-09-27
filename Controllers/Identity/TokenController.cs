@@ -1,10 +1,9 @@
-﻿
-using BooksBot.API.Services;
+﻿using JobHunt.DTO.Identity;
+using JobHunt.Services;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviews.Models;
 using System.Threading.Tasks;
 
-namespace MovieReviews.Controllers.Identity
+namespace JobHunt.Controllers.Identity
 {
     [Route("api/identity/token")]
     [ApiController]

@@ -1,12 +1,9 @@
-﻿
-using BooksBot.API.Services;
-using JobHunt.Database.Entities;
+﻿using JobHunt.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using MovieReviews.Entities;
 using System.Threading.Tasks;
 
-namespace MovieReviews.Database
+namespace JobHunt.Database
 {
     public class DatabaseSeeder : IDatabaseSeeder
     {

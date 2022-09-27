@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GenPsych.Application.Responses.Identity
+namespace JobHunt.DTO.Identity
 {
     public class PermissionResponse
     {

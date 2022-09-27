@@ -1,4 +1,4 @@
-﻿namespace MovieReviews.Configurations
+﻿namespace JobHunt.Configurations
 {
     public class JwtSettings
     {

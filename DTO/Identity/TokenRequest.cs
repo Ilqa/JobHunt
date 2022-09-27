@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieReviews.Models
+namespace JobHunt.DTO.Identity
 {
     public class TokenRequest
     {

@@ -1,8 +1,7 @@
-﻿using JobHunt.Database.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReviews.Entities
+namespace JobHunt.Database.Entities
 {
     public class Job : IAuditableEntity
     {

@@ -1,6 +1,8 @@
-using BooksBot.API.Services;
+using JobHunt.Configurations;
+using JobHunt.Database;
 using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
+using JobHunt.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -12,9 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MovieReviews.Configurations;
-using MovieReviews.Database;
-using MovieReviews.Entities;
 using MovieReviews.Services;
 using System.Text;
 
@@ -96,7 +95,7 @@ namespace MovieReviews
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BooksBot.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "JobHunt.API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -175,7 +174,7 @@ namespace MovieReviews
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BooksBot.API v1");
+                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "JobHunt.API v1");
             });
             app.UseCors("AllowOrigin");
             //app.UseGraphQL<MovieReviewSchema>();

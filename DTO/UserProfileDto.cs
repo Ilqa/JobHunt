@@ -1,15 +1,9 @@
-﻿using JobHunt.Database.Entities;
-using MovieReviews.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JobHunt.DTO
 {
     public class UserProfileDto
     {
-       
-
         [MaxLength(256)]
         public string Region { get; set; }
         [MaxLength(256)]
@@ -39,8 +33,6 @@ namespace JobHunt.DTO
         //  public List<UserEducation> EducationDetails { get; set; }
 
         //  public List<UserExperience> JobHistory { get; set; }
-
-
 
     }
 }

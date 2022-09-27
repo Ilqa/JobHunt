@@ -1,4 +1,4 @@
-﻿namespace GenPsych.Application.Responses.Identity
+﻿namespace JobHunt.DTO.Identity
 {
     public class RoleClaimResponse
     {

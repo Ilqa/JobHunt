@@ -1,8 +1,8 @@
 ﻿
+using JobHunt.Configurations;
 using JobHunt.Database.Entities;
 using JobHunt.Helpers;
 using Microsoft.AspNetCore.Http;
-using MovieReviews.Configurations;
 using System;
 using System.IO;
 using System.Linq;
@@ -29,6 +29,11 @@ namespace JobHunt.Database.Repositories
         {
             await _repository.AddAsync(profile);
             await _unitOfWork.Commit();
+        }
+
+        public async Task<UserProfile> GetProfileAsync(int userId)
+        {
+            return _repository.Entities.FirstOrDefault(p => p.UserId == userId);
         }
 
         public async Task UpdateProfileAsync(UserProfile profile)

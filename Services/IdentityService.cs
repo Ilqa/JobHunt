@@ -1,10 +1,8 @@
-﻿
+﻿using JobHunt.Configurations;
 using JobHunt.Database.Entities;
+using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using MovieReviews.Configurations;
-using MovieReviews.Entities;
-using MovieReviews.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BooksBot.API.Services
+namespace JobHunt.Services
 {
     public class IdentityService : IIdentityService
     {
@@ -66,7 +64,7 @@ namespace BooksBot.API.Services
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
-            return (new TokenResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true });
+            return new TokenResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true };
 
 
         }

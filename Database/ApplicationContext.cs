@@ -6,9 +6,8 @@ using JobHunt.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MovieReviews.Entities;
 
-namespace MovieReviews.Database
+namespace JobHunt.Database
 {
     public class ApplicationContext : IdentityDbContext<User, UserType, int> //, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>> //, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityUserToken<string>
     {
@@ -36,11 +35,11 @@ namespace MovieReviews.Database
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedOn = System.DateTime.UtcNow;
+                        entry.Entity.CreatedOn = DateTime.UtcNow;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.ModifiedOn = System.DateTime.UtcNow;
+                        entry.Entity.ModifiedOn = DateTime.UtcNow;
                         break;
                 }
             }

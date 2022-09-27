@@ -1,8 +1,7 @@
-﻿
-using MovieReviews.Models;
+﻿using JobHunt.DTO.Identity;
 using System.Threading.Tasks;
 
-namespace BooksBot.API.Services
+namespace JobHunt.Services
 {
     public interface IIdentityService
     {

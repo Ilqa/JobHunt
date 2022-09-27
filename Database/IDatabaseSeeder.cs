@@ -1,4 +1,4 @@
-﻿namespace BooksBot.API.Services
+﻿namespace JobHunt.Database
 {
     public interface IDatabaseSeeder
     {

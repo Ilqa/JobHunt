@@ -1,5 +1,4 @@
-﻿using MovieReviews.Database;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 

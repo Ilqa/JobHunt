@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace MovieReviews.Entities
+namespace JobHunt.Database.Entities
 {
     public class UserType : IdentityRole<int>
     {

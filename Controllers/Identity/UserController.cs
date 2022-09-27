@@ -1,12 +1,11 @@
 ﻿using JobHunt.DTO.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviews.DTO.Identity;
 using MovieReviews.Services;
 using MovieReviews.Wrappers;
 using System.Threading.Tasks;
 
-namespace GenPsych.Api.Controllers.Identity
+namespace JobHunt.Controllers.Identity
 {
     //[Authorize]
     [Route("api/identity/user")]
@@ -26,7 +25,7 @@ namespace GenPsych.Api.Controllers.Identity
         //[Authorize(Policy = Permissions.Users.View)]
         [HttpGet]
         public async Task<PaginatedResult<UserDto>> GetAll(int? pageNumber, int? pageSize, string sortField, string sortOrder, string searchText)
-        { 
+        {
             return await _userService.GetAllAsync(pageNumber ?? 1, pageSize ?? 10, sortField ?? "UserName", sortOrder ?? "ASC", searchText ?? "");
         }
 
@@ -58,7 +57,7 @@ namespace GenPsych.Api.Controllers.Identity
             return await _userService.RegisterAsync(request, origin);
         }
 
-        
+
         [HttpPost("ChangePassword")]
         public async Task<string> ChangePassword(ChangePasswordRequest request)
         {

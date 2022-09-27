@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace GenPsych.Application.Extensions
+namespace JobHunt.Extensions
 {
     public static class EnumExtensions
     {

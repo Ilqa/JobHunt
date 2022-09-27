@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieReviews.DTO.Identity
+namespace JobHunt.DTO.Identity
 {
     public class RegisterUser
     {
