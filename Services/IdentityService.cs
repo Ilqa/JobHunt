@@ -17,14 +17,14 @@ namespace JobHunt.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<UserType> _roleManager;
-        private readonly JwtSettings _jwtSettings;
+       // private readonly JwtSettings _jwtSettings;
 
         public IdentityService(
-            UserManager<User> userManager, RoleManager<UserType> roleManager, JwtSettings jwtSettings)
+            UserManager<User> userManager, RoleManager<UserType> roleManager) //, JwtSettings jwtSettings
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _jwtSettings = jwtSettings;
+            //_jwtSettings = jwtSettings;
         }
 
 
@@ -55,10 +55,10 @@ namespace JobHunt.Services
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
             }
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("S0M3RAN0MS3CR3T!1!MAG1C!1!")); //_jwtSettings.Key
             var token = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
+            issuer: "JobHunt.Api", //_jwtSettings.Issuer,
+            audience: "JobHunt.Api", // _jwtSettings.Audience,
             expires: DateTime.Now.AddHours(3),
             claims: authClaims,
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)

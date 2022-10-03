@@ -1,8 +1,8 @@
 ﻿using JobHunt.DTO.Identity;
+using JobHunt.Services;
+using JobHunt.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviews.Services;
-using MovieReviews.Wrappers;
 using System.Threading.Tasks;
 
 namespace JobHunt.Controllers.Identity

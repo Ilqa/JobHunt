@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MovieReviews.Wrappers;
+﻿using JobHunt.Wrappers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace JobHunt.Database.Repositories
@@ -13,13 +14,12 @@ namespace JobHunt.Database.Repositories
     public class UserProfileRepository : IUserProfileRepository
     {
         private readonly IRepositoryAsync<UserProfile> _repository;
-        private readonly AppConfiguration _appConfig;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserProfileRepository(IRepositoryAsync<UserProfile> repository, AppConfiguration appConfig, IUnitOfWork unitOfWork)
+        public UserProfileRepository(IRepositoryAsync<UserProfile> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
-            _appConfig = appConfig;
+          
             _unitOfWork = unitOfWork;
         }
 
@@ -48,18 +48,20 @@ namespace JobHunt.Database.Repositories
         {
             var profile = _repository.Entities.FirstOrDefault(p => p.UserId == userId);
             if (profile == null)
-                return "File Upload Failed";
+                return "User Profile Not Found";
 
             FileInfo info = new(file.FileName);
             var fileType = FileHandling.GetFiletype(info.Extension);
             if (fileType == Enums.FileType.Invalid)
                 return " Invalid File Type";
 
-            var path = _appConfig.FilePAth;
+            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location.Substring(0, Assembly.GetEntryAssembly().Location.IndexOf("bin\\")));
+            path += "/JobHuntFiles";
+            //var path2 = Directory.GetCurrentDirectory();
+            
+            //"D:\\JobHuntFiles";  //_appConfig.FilePAth;
             if (!Directory.Exists(path))
-            {
                 Directory.CreateDirectory(path);
-            }
 
             //file size 2mb limit?|
             using var dataStream = new MemoryStream();

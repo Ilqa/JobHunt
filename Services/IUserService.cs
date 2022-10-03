@@ -1,8 +1,8 @@
 ﻿using JobHunt.DTO.Identity;
-using MovieReviews.Wrappers;
+using JobHunt.Wrappers;
 using System.Threading.Tasks;
 
-namespace MovieReviews.Services
+namespace JobHunt.Services
 {
     public interface IUserService
     {
@@ -18,7 +18,7 @@ namespace MovieReviews.Services
 
         //Task<IResult<UserResponse>> GetAsync(string userId);
 
-       
+
 
         //Task<IResult<string>> CreateUser(CreateUpdateUserRequest request);
 

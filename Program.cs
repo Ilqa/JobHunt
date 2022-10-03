@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 
-namespace MovieReviews
+namespace JobHunt
 {
     public class Program
     {
@@ -21,7 +20,7 @@ namespace MovieReviews
                   .ReadFrom.Configuration(Configuration)
                   .CreateLogger();
             CreateHostBuilder(args).Build().Run();
-           // CreateHostBuilder(args).Build().Run();
+            // CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)

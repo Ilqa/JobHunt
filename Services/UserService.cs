@@ -3,13 +3,13 @@ using JobHunt.Configurations;
 using JobHunt.Database.Entities;
 using JobHunt.DTO.Identity;
 using JobHunt.Extensions;
+using JobHunt.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MovieReviews.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace MovieReviews.Services
+namespace JobHunt.Services
 {
     public class UserService : IUserService
     {
@@ -27,7 +27,7 @@ namespace MovieReviews.Services
         private readonly RoleManager<UserType> _roleManager;
         //private readonly IMailService _mailService;
         private readonly IMapper _mapper;
-        private readonly AppConfiguration _appConfig;
+        //private readonly AppConfiguration _appConfig;
         private readonly SignInManager<User> _signInManager;
         //private readonly GoogleConfiguration _googleConfig;
         public int AuthenticatedUserID { get; }
@@ -38,7 +38,7 @@ namespace MovieReviews.Services
             IMapper mapper,
             RoleManager<UserType> roleManager,
             //IMailService mailService,
-            IOptions<AppConfiguration> appConfig,
+           // IOptions<AppConfiguration> appConfig,
             SignInManager<User> signInManager,
             IHttpContextAccessor httpContextAccessor)
         {
@@ -46,7 +46,7 @@ namespace MovieReviews.Services
             _mapper = mapper;
             _roleManager = roleManager;
             //_mailService = mailService;
-            _appConfig = appConfig.Value;
+           // _appConfig = appConfig.Value;
             _signInManager = signInManager;
             AuthenticatedUserID = Convert.ToInt32(httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier));
             AuthenticatedUserClaims = httpContextAccessor.HttpContext?.User?.Claims.AsEnumerable().Select(item => new KeyValuePair<string, string>(item.Type, item.Value)).ToList();
@@ -148,11 +148,11 @@ namespace MovieReviews.Services
             if (request.Password == request.NewPassword)
                 return "New password cannot be equal to old password.";
 
-            var user = await this._userManager.FindByIdAsync(request.UserId.ToString());
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
             if (user == null)
                 return "User Not Found.";
 
-            var identityResult = await this._userManager.ChangePasswordAsync(
+            var identityResult = await _userManager.ChangePasswordAsync(
                 user,
                 request.Password,
                 request.NewPassword);

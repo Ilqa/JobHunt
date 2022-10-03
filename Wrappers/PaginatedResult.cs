@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MovieReviews.Wrappers
+namespace JobHunt.Wrappers
 {
-    public class PaginatedResult<T> 
+    public class PaginatedResult<T>
     {
         public PaginatedResult(List<T> data)
         {
@@ -19,7 +19,7 @@ namespace MovieReviews.Wrappers
             PageSize = pageSize;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             TotalCount = count;
-           
+
         }
 
         public int CurrentPage { get; set; }

@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MovieReviews": {
+    "JobHunt": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

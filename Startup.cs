@@ -14,10 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MovieReviews.Services;
 using System.Text;
 
-namespace MovieReviews
+namespace JobHunt
 {
     public class Startup
     {
@@ -39,8 +38,10 @@ namespace MovieReviews
 
             AddRepositoriesAndServices(services);
 
-            services.AddSingleton(Configuration.GetSection("AppConfiguration").Get<AppConfiguration>());
-            services.AddSingleton(Configuration.GetSection("JwtSettings").Get<JwtSettings>());
+            //services.AddSingleton(Configuration.GetSection("AppConfiguration").Get<AppConfiguration>());
+            //services.Configure<AppConfiguration>(Configuration.GetSection("AppConfiguration"));
+            //services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
+            // services.AddSingleton(Configuration.GetSection("JwtSettings").Get<JwtSettings>());
 
             services.AddControllers();
 
@@ -157,7 +158,7 @@ namespace MovieReviews
             //services.RegisterType<QueryObject>().AsSelf().SingleInstance();
             //services.RegisterType<MovieReviewSchema>().AsSelf().SingleInstance();
 
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -168,13 +169,13 @@ namespace MovieReviews
                 app.UseDeveloperExceptionPage();
             }
 
-           
-            
+
+
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "JobHunt.API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "JobHunt.API v1");
             });
             app.UseCors("AllowOrigin");
             //app.UseGraphQL<MovieReviewSchema>();

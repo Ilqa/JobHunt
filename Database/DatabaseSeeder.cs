@@ -28,10 +28,6 @@ namespace JobHunt.Database
         {
             CreateRoles();
             AddAdministrator("ilqa.nawaz@arpatech.com", "ilqa");
-            AddAdministrator("louis@booktech.co.uk", "louis");
-            AddAdministrator("tom@booktech.co.uk", "tom");
-            AddAdministrator("syd@booktech.co.uk", "syd");
-            AddAdministrator("system@booktech.co.uk", "system");
 
             //_db.SaveChanges();
         }
