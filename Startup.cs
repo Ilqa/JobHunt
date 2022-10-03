@@ -56,7 +56,7 @@ namespace JobHunt
             });
 
             services.AddDbContext<ApplicationContext>(options =>
-                   options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")))
+                   options.UseNpgsql("Server=localhost;Port=5432;Database=WorkForce;User Id=postgres;Password=floodee;"))  //Configuration.GetConnectionString("DefaultConnectionString"))
                    .AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 
             services.AddIdentity<User, UserType>(options => { options.SignIn.RequireConfirmedAccount = false; })
@@ -87,9 +87,9 @@ namespace JobHunt
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidIssuer = Configuration["JwtSettings:Issuer"],
-                    ValidAudience = Configuration["JwtSettings:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:Key"]))
+                    ValidIssuer = "JobHunt.Api", //Configuration["JwtSettings:Issuer"],
+                    ValidAudience = "JobHunt.Api", //Configuration["JwtSettings:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("S0M3RAN0MS3CR3T!1!MAG1C!1!")) //Configuration["JwtSettings:Key"]
                 };
             });
 
