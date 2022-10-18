@@ -371,7 +371,7 @@ namespace JobHunt.Services
 
         //    var code = await _userManager.GeneratePasswordResetTokenAsync(user);
         //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        //    var endpointUri = new Uri(string.Concat($"{_appConfig.FrontEndBaseUrl}", request.IsRequestFromClientApp? _appConfig.FrontEndClientResetPasswordUrl: _appConfig.FrontEndStaffResetPasswordUrl));
+        //    var endpointUri = new Uri(string.Concat($"{_appConfig.FrontEndBaseUrl}", request.IsRequestFromClientApp ? _appConfig.FrontEndClientResetPasswordUrl : _appConfig.FrontEndStaffResetPasswordUrl));
         //    //var passwordResetURL = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
         //    var mailRequest = new MailRequest
         //    {

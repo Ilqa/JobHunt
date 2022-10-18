@@ -8,7 +8,7 @@ namespace JobHunt.Database.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public string CompanyName { get; set; }
+        public Company CompanyName { get; set; }
 
         public string Designation { get; set; }
 

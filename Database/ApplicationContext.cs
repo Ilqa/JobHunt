@@ -21,11 +21,14 @@ namespace JobHunt.Database
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserEducation> UserEducation { get; set; }
         public DbSet<UserExperience> UserExperiences { get; set; }
+        public DbSet<Skill> Skills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<JobSkill>().HasKey(lp => new { lp.SkillId, lp.JobId });
+            modelBuilder.Entity<UserSkill>().HasKey(lp => new { lp.SkillId, lp.ProfileId });
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())

@@ -123,26 +123,7 @@ namespace JobHunt
                 });
             });
 
-            //services
-            //    .AddGraphQL(
-            //        (options, provider) =>
-            //        {
-            //            // Load GraphQL Server configurations
-            //            var graphQLOptions = Configuration
-            //                .GetSection("GraphQL")
-            //                .Get<GraphQLOptions>();
-            //            options.ComplexityConfiguration = graphQLOptions.ComplexityConfiguration;
-            //            options.EnableMetrics = graphQLOptions.EnableMetrics;
-            //            // Log errors
-            //            var logger = provider.GetRequiredService<ILogger<Startup>>();
-            //            options.UnhandledExceptionDelegate = ctx =>
-            //                logger.LogError("{Error} occurred", ctx.OriginalException.Message);
-            //        })
-            //    // Adds all graph types in the current assembly with a singleton lifetime.
-            //    .AddGraphTypes()
-            //    // Add GraphQL data loader to reduce the number of calls to our repository. https://graphql-dotnet.github.io/docs/guides/dataloader/
-            //    .AddDataLoader()
-            //    .AddSystemTextJson();
+           
         }
 
         public virtual void AddRepositoriesAndServices(IServiceCollection services)
@@ -153,6 +134,8 @@ namespace JobHunt
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<ISkillRepository, SkillRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
             //services.RegisterType<QueryObject>().AsSelf().SingleInstance();

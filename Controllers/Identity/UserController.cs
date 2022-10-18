@@ -17,9 +17,9 @@ namespace JobHunt.Controllers.Identity
         public UserController(IUserService userService) => _userService = userService;
 
 
-        [HttpGet("current")]
-        [ProducesResponseType(typeof(UserDto), 200)]
-        public async Task<UserDto> GetCurrentUser() => await _userService.GetCurrentUserAsync();
+        //[HttpGet("current")]
+        //[ProducesResponseType(typeof(UserDto), 200)]
+        //public async Task<UserDto> GetCurrentUser() => await _userService.GetCurrentUserAsync();
 
 
         //[Authorize(Policy = Permissions.Users.View)]

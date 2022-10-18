@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -39,13 +40,13 @@ namespace JobHunt.Database.Entities
 
         public string ProfileHeadline { get; set; }
 
-        public string Skills { get; set; }
+        public List<UserSkill> Skills { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
 
-        //  public List<UserEducation> EducationDetails { get; set; }
+         public List<UserEducation> EducationDetails { get; set; }
 
-        //  public List<UserExperience> JobHistory { get; set; }
+         public List<UserExperience> JobHistory { get; set; }
 
 
 

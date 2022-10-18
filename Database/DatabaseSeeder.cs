@@ -1,6 +1,7 @@
 ﻿using JobHunt.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace JobHunt.Database
@@ -11,6 +12,7 @@ namespace JobHunt.Database
         private readonly ApplicationContext _db;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<UserType> _roleManager;
+
 
         public DatabaseSeeder(
             UserManager<User> userManager,
@@ -32,6 +34,7 @@ namespace JobHunt.Database
             //_db.SaveChanges();
         }
 
+      
         private void CreateRoles()
         {
             Task.Run(async () =>
@@ -47,6 +50,18 @@ namespace JobHunt.Database
                 {
                     await _roleManager.CreateAsync(new UserType() { Name = "Basic" });
                     _logger.LogInformation("Seeded Client Role.");
+                }
+                var employeeRoleInDb = await _roleManager.FindByNameAsync("Employee");
+                if (employeeRoleInDb == null)
+                {
+                    await _roleManager.CreateAsync(new UserType() { Name = "Employee" });
+                    _logger.LogInformation("Seeded Employee Role.");
+                }
+                var employerRoleInDb = await _roleManager.FindByNameAsync("Employer");
+                if (employerRoleInDb == null)
+                {
+                    await _roleManager.CreateAsync(new UserType() { Name = "Employer" });
+                    _logger.LogInformation("Seeded Employer Role.");
                 }
 
             }).GetAwaiter().GetResult();

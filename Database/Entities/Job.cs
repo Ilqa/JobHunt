@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobHunt.Database.Entities
@@ -15,6 +16,8 @@ namespace JobHunt.Database.Entities
         public int? CompanyId { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
+
+        public List<JobSkill> RequiredSKills { get; set; }
 
         //[ForeignKey("PostedById")]
         //public virtual User PostedBy { get; set; }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JobHunt.Database.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobHunt.DTO
 {
@@ -13,9 +15,9 @@ namespace JobHunt.DTO
 
         public string Address { get; set; }
 
-        //public string ResumeFileName { get; set; }
+        public string ResumeFileName { get; set; }
 
-       // public string VideoFileName { get; set; }
+       public string VideoFileName { get; set; }
 
         //[ForeignKey("UserId")]
         //public User User { get; set; }
@@ -29,10 +31,12 @@ namespace JobHunt.DTO
         public string ProfileHeadline { get; set; }
         public string PhoneNumber { get; set; }
         public string Skills { get; set; }
+        public string FirstName { get; internal set; }
+        public string LastName { get; internal set; }
 
-        //  public List<UserEducation> EducationDetails { get; set; }
+        public List<UserEducation> EducationDetails { get; set; }
 
-        //  public List<UserExperience> JobHistory { get; set; }
-
+        public List<UserExperience> JobHistory { get; set; }
+        public string Email { get; internal set; }
     }
 }

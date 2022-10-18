@@ -3,6 +3,7 @@ using JobHunt.Configurations;
 using JobHunt.Database.Entities;
 using JobHunt.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace JobHunt.Database.Repositories
 
         public async Task<UserProfile> GetProfileAsync(int userId)
         {
-            return _repository.Entities.FirstOrDefault(p => p.UserId == userId);
+            return _repository.Entities.Include(p => p.User).Include(p => p.JobHistory).Include(p=> p.EducationDetails).FirstOrDefault(p => p.UserId == userId);
         }
 
         public async Task UpdateProfileAsync(UserProfile profile)
