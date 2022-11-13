@@ -65,9 +65,6 @@ namespace JobHunt.Controllers
        
 
        
-       
-        
-        Task<List<Job>> GetJobsForCity(string city);
     }
 }
-}
+
