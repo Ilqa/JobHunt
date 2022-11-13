@@ -8,6 +8,8 @@ namespace JobHunt.Database.Entities
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public string Title { get; set; }
+        public string City { get; set; }
 
         public int ViewCount { get; set; }
 
@@ -19,8 +21,15 @@ namespace JobHunt.Database.Entities
 
         public List<JobSkill> RequiredSKills { get; set; }
 
-        //[ForeignKey("PostedById")]
-        //public virtual User PostedBy { get; set; }
-        //public int PostedById { get; set; }
+        [ForeignKey("PostedById")]
+        public virtual User PostedBy { get; set; }
+        public int PostedById { get; set; }
+
+        public bool IsPublished { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public bool IsHidden { get; set; }
+
     }
 }
