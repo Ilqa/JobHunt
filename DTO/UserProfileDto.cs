@@ -34,9 +34,9 @@ namespace JobHunt.DTO
         public string FirstName { get; internal set; }
         public string LastName { get; internal set; }
 
-        public List<UserEducation> EducationDetails { get; set; }
+        public List<UserEducationDto> EducationDetails { get; set; }
 
-        public List<UserExperience> JobHistory { get; set; }
+        public List<UserExperienceDto> JobHistory { get; set; }
         public string Email { get; internal set; }
     }
 }
