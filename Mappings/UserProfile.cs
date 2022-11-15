@@ -25,7 +25,7 @@ namespace JobHunt.Mappings
                 .ForPath(dist => dist.User.Email, opt => opt.MapFrom(src => src.Email));
 
             CreateMap<UserEducation, UserEducationDto>().ReverseMap();
-            CreateMap<UserExperience, UserEducationDto>().ReverseMap();
+            CreateMap<UserExperience, UserExperienceDto>().ReverseMap();
         }
     }
 }
