@@ -29,24 +29,24 @@ namespace JobHunt.Controllers
         }
 
         [HttpPost]
-        public async Task<string> AddJob(UserProfileDto profile)
+        public async Task<string> AddJob(JobDto job)
         {
-            await _repository.AddJob(_mapper.Map<Job>(profile));
-            return "Job Created";
+            var jobId = await _repository.AddJob(_mapper.Map<Job>(job));
+            return $"Job Created {jobId}";
         }
 
-        [HttpPut("Publish/{jobId}")]
-        public async Task<string> PublishJob(int jobId)
+        [HttpPut("PublishStatus/{jobId}")]
+        public async Task<string> PublishOrUnpublishJob(int jobId)
         {
-            await _repository.PublishJob(jobId);
-            return "Job Published";
+            await _repository.PublishOrUnpublishJob(jobId);
+            return "Job Updated";
         }
 
-        [HttpPut("Hide/{jobId}")]
-        public async Task<string> HideJob(int jobId)
+        [HttpPut("HideStatus/{jobId}")]
+        public async Task<string> HideOrUnhideJob(int jobId)
         {
-            await _repository.HideJob(jobId);
-            return "Job Hidden";
+            await _repository.HideOrUnhideJob(jobId);
+            return "Job Updated";
         }
 
         [HttpPut("Remove/{jobId}")]
@@ -57,9 +57,10 @@ namespace JobHunt.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Job>> GetJobsForCity(string city)
+        public async Task<List<JobDto>> GetJobsForCity(string city)
         {
-            return await _repository.GetJobsForCity(city);
+            var jobs = await _repository.GetJobsForCity(city);
+            return _mapper.Map<List<JobDto>>(jobs);
         }
 
        
