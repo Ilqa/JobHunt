@@ -135,6 +135,7 @@ namespace JobHunt
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<ISkillRepository, SkillRepository>();
+            services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
