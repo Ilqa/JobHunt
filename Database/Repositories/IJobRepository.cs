@@ -22,5 +22,6 @@ namespace JobHunt.Database.Repositories
         //Task<string> UploadFile(int userId, IFormFile file);
         Task<List<Job>> GetAllJobs();
         Task<List<Job>> GetJobsForCity(string city);
+        Task<Job> GetJobById(int id);
     }
 }

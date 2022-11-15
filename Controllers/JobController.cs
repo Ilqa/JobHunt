@@ -56,16 +56,23 @@ namespace JobHunt.Controllers
             return "Job Removed";
         }
 
-        [HttpGet]
+        [HttpGet("GetByCity")]
         public async Task<List<JobDto>> GetJobsForCity(string city)
         {
             var jobs = await _repository.GetJobsForCity(city);
             return _mapper.Map<List<JobDto>>(jobs);
         }
 
-       
+        [HttpGet("GetById")]
+        public async Task<JobDto> GetJobById(int id)
+        {
+            var job = await _repository.GetJobById(id);
+            return _mapper.Map<JobDto>(job);
+        }
 
-       
+
+
+
     }
 }
 
