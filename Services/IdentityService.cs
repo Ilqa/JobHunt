@@ -64,7 +64,7 @@ namespace JobHunt.Services
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
-            return new TokenResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true };
+            return new TokenResponse { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true, UserId = user.Id };
 
 
         }

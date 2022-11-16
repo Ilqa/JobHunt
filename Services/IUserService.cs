@@ -14,7 +14,9 @@ namespace JobHunt.Services
         Task<string> ChangePasswordAsync(ChangePasswordRequest model);
 
         Task<string> RegisterAsync(RegisterUser request, string origin);
+
         Task<int> GetCountAsync();
+        Task<TokenResponse> Login(TokenRequest model);
 
         //Task<IResult<UserResponse>> GetAsync(string userId);
 

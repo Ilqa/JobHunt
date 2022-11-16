@@ -12,12 +12,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IResult = JobHunt.Wrappers.IResult;
 
 namespace JobHunt.Services
 {
@@ -88,18 +90,19 @@ namespace JobHunt.Services
             throw new NotImplementedException();
         }
 
-        public async Task<string> RegisterAsync(RegisterUser request, string origin)
+        public async Task<IResult> RegisterAsync(RegisterUser request, string origin)
         {
             var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
             if (userWithSameUserName != null)
-                return string.Format("Username {0} is already taken.", request.UserName);
+                return await Result.FailAsync("User Not Found.");
+           // return string.Format("Username {0} is already taken.", request.UserName);
 
             var user = new User
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.UserName,
+                UserName = request.UserName.IsNullOrEmpty()? request.Email: request.UserName,
                 //PhoneNumber = request.PhoneNumber,
                 //IsActive = request.ActivateUser,
                 //EmailConfirmed = request.AutoConfirmEmail
@@ -116,7 +119,10 @@ namespace JobHunt.Services
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
             if (userWithSameEmail != null)
-                return string.Format("Email {0} is already registered.", request.Email);
+                return await Result.FailAsync($"Email {request.Email} is already registered.");
+
+
+           // return string.Format("Email {0} is already registered.", request.Email);
 
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
@@ -134,32 +140,72 @@ namespace JobHunt.Services
                 //    _mailService.SendAsync(mailRequest);
                 //    return await Result<string>.SuccessAsync(user.Id, string.Format("User {0} Registered. Please check your Mailbox to verify!", user.UserName));
                 //}
-                return string.Format("User {0} Registered.", user.UserName);
-            }
 
-            return string.Join(',', result.Errors.Select(a => a.Description.ToString()));
+                return await Result.SuccessAsync($"User {user.UserName} registered."); ;
+            }
+            return await Result.FailAsync(string.Join(',', result.Errors.Select(a => a.Description.ToString())));
+           // return string.Join(',', result.Errors.Select(a => a.Description.ToString()));
 
 
 
         }
 
-        public async Task<string> ChangePasswordAsync(ChangePasswordRequest request)
+        public async Task<IResult> ChangePasswordAsync(ChangePasswordRequest request)
         {
             if (request.Password == request.NewPassword)
-                return "New password cannot be equal to old password.";
+                return await Result.FailAsync("New password cannot be equal to old password.");
+           
 
             var user = await _userManager.FindByIdAsync(request.UserId.ToString());
             if (user == null)
-                return "User Not Found.";
+                return await Result.FailAsync("User Not Found");
 
             var identityResult = await _userManager.ChangePasswordAsync(
                 user,
                 request.Password,
                 request.NewPassword);
             var errors = identityResult.Errors.Select(e => e.Description.ToString()).ToList();
-            return identityResult.Succeeded ? "Password Updated Successfully" : string.Join(", ", identityResult.Errors.Select(e => e.Description.ToString()).ToList());
+            return identityResult.Succeeded ?
+                await Result.SuccessAsync("Password Updated Successfully") :
+                await Result.FailAsync(string.Join(", ", identityResult.Errors.Select(e => e.Description.ToString()).ToList()));
         }
 
+        public async Task<Result<TokenResponse>> Login(TokenRequest model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return await Result<TokenResponse>.FailAsync("User Not Found.");
+
+            if (!user.IsActive)
+                return await Result<TokenResponse>.FailAsync("User Not Active. Please contact the administrator.");
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordValid)
+                return await Result<TokenResponse>.FailAsync("Invalid Credentials.");
+
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var authClaims = new List<Claim>
+                                                {
+                                                new Claim(ClaimTypes.Name, user.UserName),
+                                                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                                                };
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("S0M3RAN0MS3CR3T!1!MAG1C!1!")); //_jwtSettings.Key
+            var token = new JwtSecurityToken(
+            issuer: "JobHunt.Api", //_jwtSettings.Issuer,
+            audience: "JobHunt.Api", // _jwtSettings.Audience,
+            expires: DateTime.Now.AddHours(3),
+            claims: authClaims,
+            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            TokenResponse response = new() { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true, UserId = user.Id };
+            return await Result<TokenResponse>.SuccessAsync(response);
+        }
 
         //public async Task<IResult<string>> CreateUser(CreateUpdateUserRequest request)
         //{

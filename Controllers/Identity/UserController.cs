@@ -24,9 +24,16 @@ namespace JobHunt.Controllers.Identity
 
         //[Authorize(Policy = Permissions.Users.View)]
         [HttpGet]
-        public async Task<PaginatedResult<UserDto>> GetAll(int? pageNumber, int? pageSize, string sortField, string sortOrder, string searchText)
+        public async Task<IActionResult> GetAll(int? pageNumber, int? pageSize, string sortField, string sortOrder, string searchText)
         {
-            return await _userService.GetAllAsync(pageNumber ?? 1, pageSize ?? 10, sortField ?? "UserName", sortOrder ?? "ASC", searchText ?? "");
+            return Ok(await _userService.GetAllAsync(pageNumber ?? 1, pageSize ?? 10, sortField ?? "UserName", sortOrder ?? "ASC", searchText ?? ""));
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Get(TokenRequest model)
+        {
+            return Ok(await _userService.Login(model));
+
         }
 
 
@@ -51,18 +58,18 @@ namespace JobHunt.Controllers.Identity
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<string> RegisterAsync(RegisterUser request)
+        public async Task<IActionResult> RegisterAsync(RegisterUser request)
         {
             var origin = Request.Headers["origin"];
-            return await _userService.RegisterAsync(request, origin);
+            return Ok(await _userService.RegisterAsync(request, origin));
         }
 
 
         [HttpPost("ChangePassword")]
-        public async Task<string> ChangePassword(ChangePasswordRequest request)
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
         {
             //var origin = Request.Headers["origin"];
-            return await _userService.ChangePasswordAsync(request);
+            return Ok(await _userService.ChangePasswordAsync(request));
         }
 
         //[HttpPost("create-user")]

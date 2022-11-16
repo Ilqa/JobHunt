@@ -18,7 +18,8 @@ namespace JobHunt.Extensions
             pageNumber = pageNumber <= 0 ? 1 : pageNumber;
             List<T> items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             // return PaginatedResult<T>.Success(items, count, pageNumber, pageSize);
-            return new PaginatedResult<T> { CurrentPage = pageNumber, Data = items, TotalCount = count, PageSize = pageSize };
+           // return new PaginatedResult<T>.Success { CurrentPage = pageNumber, Data = items, TotalCount = count, PageSize = pageSize };
+            return PaginatedResult<T>.Success(items, count, pageNumber, pageSize);
         }
     }
 }
