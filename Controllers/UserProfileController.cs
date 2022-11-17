@@ -3,6 +3,7 @@ using AutoMapper;
 using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
 using JobHunt.DTO;
+using JobHunt.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -19,12 +20,12 @@ namespace JobHunt.Controllers
     {
 
         private readonly IMapper _mapper;
-        private readonly IUserProfileRepository _repository;
+        private readonly IUserService _service;
 
-        public UserProfileController(IUserProfileRepository repository, IMapper mapper)
+        public UserProfileController(IUserService service)
         {
-            _repository = repository;  
-            _mapper = mapper;
+            _service = service;// = repository;  
+            //_mapper = mapper;
         }
 
         [HttpPost]
@@ -35,16 +36,18 @@ namespace JobHunt.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<UserProfileDto> GetProfile(int userId)
+        public async Task<IActionResult> GetProfile(int userId)
         {
-            var profile = await _repository.GetProfileAsync(userId);
-           return _mapper.Map<UserProfileDto>(profile);
+            return Ok(await _service.GetProfileAsync(userId));
+           // var profile = await _repository.GetProfileAsync(userId);
+           //return _mapper.Map<UserProfileDto>(profile);
         }
 
         [HttpPost("UploadFile")]
-        public async Task<string> UploadVideoResume(IFormFile file, int userId)
+        public async Task<IActionResult> UploadFileResume(IFormFile file, int userId)
         {
-            return await _repository.UploadFile(userId, file);
+            return Ok(await _service.UploadFile(userId, file));
+            //return await _repository.UploadFile(userId, file);
         }
 
         //[HttpGet("GetVideo")]

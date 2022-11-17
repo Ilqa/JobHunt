@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using JobHunt.Configurations;
 using JobHunt.Database.Entities;
+using JobHunt.Database.Repositories;
+using JobHunt.DTO;
 using JobHunt.DTO.Identity;
 using JobHunt.Extensions;
+using JobHunt.Helpers;
 using JobHunt.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -34,6 +39,10 @@ namespace JobHunt.Services
         //private readonly GoogleConfiguration _googleConfig;
         public int AuthenticatedUserID { get; }
         public List<KeyValuePair<string, string>> AuthenticatedUserClaims { get; set; }
+        //private readonly IMapper _mapper;
+        private readonly IUserProfileRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
+
 
         public UserService(
             UserManager<User> userManager,
@@ -42,7 +51,9 @@ namespace JobHunt.Services
             //IMailService mailService,
            // IOptions<AppConfiguration> appConfig,
             SignInManager<User> signInManager,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IUserProfileRepository repository,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -52,7 +63,8 @@ namespace JobHunt.Services
             _signInManager = signInManager;
             AuthenticatedUserID = Convert.ToInt32(httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier));
             AuthenticatedUserClaims = httpContextAccessor.HttpContext?.User?.Claims.AsEnumerable().Select(item => new KeyValuePair<string, string>(item.Type, item.Value)).ToList();
-
+            _repository = repository;
+            _unitOfWork = unitOfWork;
             //_googleConfig = googleConfig;
         }
 
@@ -206,6 +218,76 @@ namespace JobHunt.Services
             TokenResponse response = new() { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true, UserId = user.Id };
             return await Result<TokenResponse>.SuccessAsync(response);
         }
+
+        public async Task<IResult> CreateProfileAsync(UserProfileDto profile)
+        {
+            await _repository.CreateProfileAsync(_mapper.Map<UserProfile>(profile));
+            await _unitOfWork.Commit();
+            return await Result.SuccessAsync($"Profile Created for User:{profile.UserId}");
+        }
+
+        public async Task<IResult> UpdateProfileAsync(UserProfileDto profile)
+        {
+            await _repository.UpdateProfileAsync(_mapper.Map<UserProfile>(profile));
+            await _unitOfWork.Commit();
+            return await Result.SuccessAsync($"Profile Updated for User:{profile.UserId}");
+        }
+
+        public async Task<IResult> UploadFile(int userId, IFormFile file)
+        {
+            var profile = _repository.Profiles.FirstOrDefault(p => p.UserId == userId);
+            if (profile == null)
+                return await Result.FailAsync($"User Not found");
+
+            FileInfo info = new(file.FileName);
+            var fileType = FileHandling.GetFiletype(info.Extension);
+            if (fileType == Enums.FileType.Invalid)
+                return await Result.FailAsync($"Invalid File Type"); 
+
+            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location[..Assembly.GetEntryAssembly().Location.IndexOf("bin\\")]);
+            path += "/JobHuntFiles";
+            //var path2 = Directory.GetCurrentDirectory();
+
+            //"D:\\JobHuntFiles";  //_appConfig.FilePAth;
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            //file size 2mb limit?|
+            using var dataStream = new MemoryStream();
+
+            await file.CopyToAsync(dataStream);
+            var videoData = dataStream.ToArray();
+
+            if (fileType == Enums.FileType.Video)
+            {
+                profile.VideoFileData = videoData;
+                profile.VideoFileName = FileHandling.ConvertVideoName(file.FileName, userId);
+                using FileStream fileStream = new(Path.Combine(path, profile.VideoFileName), FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
+            else if (fileType == Enums.FileType.Document || fileType == Enums.FileType.PDF)
+            {
+                profile.ResumeFileData = videoData;
+                profile.ResumeFileName = FileHandling.ConvertResumeName(file.FileName, userId);
+                using FileStream fileStream = new(Path.Combine(path, profile.ResumeFileName), FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
+
+            await _repository.UpdateProfileAsync(profile);
+            await _unitOfWork.Commit();
+
+            return await Result.SuccessAsync($"File Uploaded Successfully");
+        }
+
+        public async Task<Result<UserProfileDto>> GetProfileAsync(int userId)
+        {
+            var profile = await _repository.GetProfileAsync(userId);
+           return await Result<UserProfileDto>.SuccessAsync(_mapper.Map<UserProfileDto>(profile));
+        }
+
+
+
+
 
         //public async Task<IResult<string>> CreateUser(CreateUpdateUserRequest request)
         //{

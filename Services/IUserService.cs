@@ -1,6 +1,9 @@
-﻿using JobHunt.DTO.Identity;
+﻿using JobHunt.DTO;
+using JobHunt.DTO.Identity;
 using JobHunt.Wrappers;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using IResult = JobHunt.Wrappers.IResult;
 
 namespace JobHunt.Services
 {
@@ -11,12 +14,18 @@ namespace JobHunt.Services
         Task<PaginatedResult<UserDto>> GetAllAsync(int pageNumber, int pageSize, string sortField,
             string sortOrder, string searchText);
 
-        Task<string> ChangePasswordAsync(ChangePasswordRequest model);
+        Task<IResult> ChangePasswordAsync(ChangePasswordRequest model);
 
-        Task<string> RegisterAsync(RegisterUser request, string origin);
+        Task<IResult> RegisterAsync(RegisterUser request, string origin);
 
         Task<int> GetCountAsync();
-        Task<TokenResponse> Login(TokenRequest model);
+        Task<Result<TokenResponse>> Login(TokenRequest model);
+
+        Task<IResult> CreateProfileAsync(UserProfileDto profile);
+        //Task<int?> GetProfileIdByUserID(int userId);
+        Task<IResult> UpdateProfileAsync(UserProfileDto profile);
+        Task<IResult> UploadFile(int userId, IFormFile file);
+        Task<Result<UserProfileDto>> GetProfileAsync(int userId);
 
         //Task<IResult<UserResponse>> GetAsync(string userId);
 
