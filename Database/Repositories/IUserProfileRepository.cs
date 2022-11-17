@@ -9,7 +9,7 @@ namespace JobHunt.Database.Repositories
     {
         IQueryable<UserProfile> Profiles { get; }
 
-        Task<int> CreateProfileAsync(UserProfile profile);
+        Task CreateProfileAsync(UserProfile profile);
         //Task<int?> GetProfileIdByUserID(int userId);
         Task UpdateProfileAsync(UserProfile profile);
        // Task<string> UploadFile(int userId, IFormFile file);
