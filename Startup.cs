@@ -130,7 +130,7 @@ namespace JobHunt
         {
             //services.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+           // services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();

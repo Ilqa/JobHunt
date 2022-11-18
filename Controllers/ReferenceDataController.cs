@@ -2,6 +2,7 @@
 using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
 using JobHunt.DTO;
+using JobHunt.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,51 +15,25 @@ namespace JobHunt.Controllers
     [ApiController]
     public class ReferenceDataController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly ISkillRepository _skillRepository;
-        private readonly ICompanyRepository _companyRepository;
-        private readonly RoleManager<UserType> _roleManager;
+      
+        private readonly IReferenceDataService _service;
 
-        public ReferenceDataController(ISkillRepository skillRepository, ICompanyRepository companyRepositor, RoleManager<UserType> roleManager, IMapper mapper)
-        {
-            _skillRepository = skillRepository;
-            _companyRepository = companyRepositor;
-            _mapper = mapper;
-            _roleManager = roleManager;
-        }
 
+        public ReferenceDataController(IReferenceDataService service) => _service = service;
 
         [HttpGet("Skills")]
-        public async Task<List<SkillDto>> GetAllSkills()
-        {
-            var skills = await _skillRepository.GetAllSkills();
-            return _mapper.Map<List<SkillDto>>(skills);
-        }
+        public async Task<IActionResult> GetAllSkills() => Ok(await _service.GetAllSkills());
 
         [HttpGet("UserTypes")]
-        public async Task<List<UserType>> GetAllUserTypes()
-        {
-            return await _roleManager.Roles.ToListAsync();
-        }
+        public async Task<IActionResult> GetAllUserTypes() => Ok(await _service.GetAllUserTypes());
 
         [HttpPost("Skill")]
-        public async Task AddSkill(SkillDto skill)
-        {
-            await _skillRepository.AddSkill(_mapper.Map<Skill>(skill));
-        }
-
+        public async Task<IActionResult> AddSkill(SkillDto skill) => Ok(await _service.AddSkill(skill));
 
         [HttpGet("Comapnies")]
-        public async Task<List<CompanyDto>> GetAllCompanies()
-        {
-            var companies = await _companyRepository.GetAllCompanies();
-            return  _mapper.Map<List<CompanyDto>>(companies);
-        }
+        public async Task<IActionResult> GetAllCompanies() => Ok(await _service.GetAllCompanies());
 
         [HttpPost("Company")]
-        public async Task AddCompany(CompanyDto company)
-        {
-            await _companyRepository.AddCompany(_mapper.Map<Company>(company));
-        }
+        public async Task<IActionResult> AddCompany(CompanyDto company) => Ok(await _service.AddCompany(company));
     }
 }

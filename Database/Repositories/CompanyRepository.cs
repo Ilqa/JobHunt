@@ -10,13 +10,13 @@ namespace JobHunt.Database.Repositories
     public class CompanyRepository : ICompanyRepository
     {
         private readonly IRepositoryAsync<Company> _repository;
-        private readonly IUnitOfWork _unitOfWork;
+       
 
         public CompanyRepository(IRepositoryAsync<Company> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
 
-            _unitOfWork = unitOfWork;
+          
         }
 
 
@@ -25,7 +25,7 @@ namespace JobHunt.Database.Repositories
         public async Task AddCompany(Company company)
         {
             await _repository.AddAsync(company);
-            await _unitOfWork.Commit();
+           
         }
 
         public Task<List<Company>> GetAllCompanies()

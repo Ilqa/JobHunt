@@ -10,13 +10,12 @@ namespace JobHunt.Database.Repositories
     public class SkillRepository : ISkillRepository
     {
         private readonly IRepositoryAsync<Skill> _repository;
-        private readonly IUnitOfWork _unitOfWork;
-
+       
         public SkillRepository(IRepositoryAsync<Skill> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
 
-            _unitOfWork = unitOfWork;
+           
         }
 
 
@@ -25,7 +24,7 @@ namespace JobHunt.Database.Repositories
         public async Task AddSkill(Skill skill)
         {
             await _repository.AddAsync(skill);
-            await _unitOfWork.Commit();
+            
         }
 
         public Task<List<Skill>> GetAllSkills()
