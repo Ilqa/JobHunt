@@ -10,7 +10,7 @@ namespace JobHunt.Database.Repositories
     {
         IQueryable<Job> Jobs { get; }
 
-        Task<int> AddJob(Job job);
+        Task<Job> AddJob(Job job);
 
         Task PublishOrUnpublishJob(int jobId);
         Task RemoveJob(int jobId);

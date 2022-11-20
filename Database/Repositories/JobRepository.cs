@@ -10,13 +10,12 @@ namespace JobHunt.Database.Repositories
     public class JobRepository : IJobRepository
     {
         private readonly IRepositoryAsync<Job> _repository;
-        private readonly IUnitOfWork _unitOfWork;
+        
 
         public JobRepository(IRepositoryAsync<Job> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
 
-            _unitOfWork = unitOfWork;
         }
 
 
@@ -24,11 +23,11 @@ namespace JobHunt.Database.Repositories
 
       // IQueryable<Job> IJobRepository.Skills { get; }
 
-        public async Task<int> AddJob(Job job)
+        public async Task<Job> AddJob(Job job)
         {
-            var jobId = await _repository.AddAsync(job);
-            await _unitOfWork.Commit();
-            return jobId.Id;
+            return await _repository.AddAsync(job);
+           
+            //return jobId.Id;
         }
 
         public Task<List<Job>> GetAllJobs()
@@ -52,21 +51,21 @@ namespace JobHunt.Database.Repositories
         {
            var job = await Jobs.FirstOrDefaultAsync(j => j.Id == jobId);
             job.IsPublished = !job.IsPublished;
-            await _unitOfWork.Commit();
+           
         }
 
         public async Task RemoveJob(int jobId)
         {
             var job = await Jobs.FirstOrDefaultAsync(j => j.Id == jobId);
             job.IsActive = false;
-            await _unitOfWork.Commit();
+           
         }
 
         public async Task HideOrUnhideJob(int jobId)
         {
             var job = await Jobs.FirstOrDefaultAsync(j => j.Id == jobId);
             job.IsHidden = !job.IsHidden;
-            await _unitOfWork.Commit();
+            
         }
     }
 }

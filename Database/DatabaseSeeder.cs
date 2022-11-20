@@ -80,6 +80,7 @@ namespace JobHunt.Database
                     UserName = userName,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true
+                   
                 };
                 var superUserInDb = await _userManager.FindByEmailAsync(superUser.Email);
                 if (superUserInDb == null)
@@ -87,6 +88,8 @@ namespace JobHunt.Database
                     await _userManager.CreateAsync(superUser, "Password@123");
                     var result = await _userManager.AddToRoleAsync(superUser, "Administrator");
                 }
+                else
+                    superUserInDb.IsActive = true;
             }).GetAwaiter().GetResult();
         }
 

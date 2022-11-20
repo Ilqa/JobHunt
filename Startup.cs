@@ -137,6 +137,7 @@ namespace JobHunt
             services.AddTransient<ISkillRepository, SkillRepository>();
             services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IJobService, JobService>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
             //services.RegisterType<QueryObject>().AsSelf().SingleInstance();

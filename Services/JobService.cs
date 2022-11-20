@@ -15,7 +15,7 @@ namespace JobHunt.Services
         private readonly IJobRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public JobService(IJobRepository repository, IMapper mapper, UnitOfWork unitOfWork)
+        public JobService(IJobRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _mapper = mapper;
@@ -23,9 +23,9 @@ namespace JobHunt.Services
         }
         public async Task<IResult> AddJob(JobDto job)
         {
-            var jobId = await _repository.AddJob(_mapper.Map<Job>(job));
+            var addedJob = await _repository.AddJob(_mapper.Map<Job>(job));
             await _unitOfWork.Commit();
-            return await Result.SuccessAsync($"Job Created {jobId}");
+            return await Result.SuccessAsync($"Job Created {addedJob.Id}");
         }
 
         public async Task<List<JobDto>> GetAllJobs()
