@@ -4,6 +4,7 @@ using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
 using JobHunt.DTO;
 using JobHunt.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace JobHunt.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/userProfile")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -29,27 +30,13 @@ namespace JobHunt.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserProfile(UserProfileDto profile)
-        {
-            return Ok(await _service.CreateProfileAsync(profile));
-            //await _repository.CreateProfileAsync(_mapper.Map<UserProfile>(profile));
-            //return "Profile Created";
-        }
+        public async Task<IActionResult> CreateUserProfile(UserProfileDto profile) => Ok(await _service.CreateProfileAsync(profile));
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetProfile(int userId)
-        {
-            return Ok(await _service.GetProfileAsync(userId));
-           // var profile = await _repository.GetProfileAsync(userId);
-           //return _mapper.Map<UserProfileDto>(profile);
-        }
+        public async Task<IActionResult> GetProfile(int userId) => Ok(await _service.GetProfileAsync(userId));
 
         [HttpPost("UploadFile")]
-        public async Task<IActionResult> UploadFileResume(IFormFile file, int userId)
-        {
-            return Ok(await _service.UploadFile(userId, file));
-            //return await _repository.UploadFile(userId, file);
-        }
+        public async Task<IActionResult> UploadFileResume(IFormFile file, int userId) => Ok(await _service.UploadFile(userId, file));
 
         //[HttpGet("GetVideo")]
         //public async Task<FileContentResult> GetVideo(int userId)
@@ -61,7 +48,7 @@ namespace JobHunt.Controllers
         //    {
         //        FileDownloadName = fileName
         //    };
-           
+
         //}
 
         //[HttpGet("GetResume")]
@@ -75,6 +62,6 @@ namespace JobHunt.Controllers
         //    {
         //        FileDownloadName = fileName
         //    };
-       // }
+        // }
     }
 }

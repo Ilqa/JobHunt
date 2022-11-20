@@ -30,11 +30,7 @@ namespace JobHunt.Controllers.Identity
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Get(TokenRequest model)
-        {
-            return Ok(await _userService.Login(model));
-
-        }
+        public async Task<IActionResult> Get(TokenRequest model) => Ok(await _userService.Login(model));
 
 
         ////[Authorize(Policy = Permissions.Users.View)]
@@ -58,11 +54,9 @@ namespace JobHunt.Controllers.Identity
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> RegisterAsync(RegisterUser request)
-        {
-            var origin = Request.Headers["origin"];
-            return Ok(await _userService.RegisterAsync(request, origin));
-        }
+        public async Task<IActionResult> RegisterAsync(RegisterUser request) =>
+            // var origin = Request.Headers["origin"];
+            Ok(await _userService.RegisterAsync(request, ""));
 
 
         [HttpPost("ChangePassword")]

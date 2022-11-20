@@ -3,6 +3,7 @@ using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
 using JobHunt.DTO;
 using JobHunt.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace JobHunt.Controllers
 {
+    [Authorize]
     [Route("api/ReferenceData")]
     [ApiController]
     public class ReferenceDataController : ControllerBase
