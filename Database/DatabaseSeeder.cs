@@ -30,6 +30,7 @@ namespace JobHunt.Database
         {
             CreateRoles();
             AddAdministrator("ilqa.nawaz@arpatech.com", "ilqa");
+            AddAdministrator("muhammad.adil@arpatech.com", "adil");
 
             //_db.SaveChanges();
         }
@@ -79,7 +80,8 @@ namespace JobHunt.Database
                     Email = email,
                     UserName = userName,
                     EmailConfirmed = true,
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    IsActive = true,
                    
                 };
                 var superUserInDb = await _userManager.FindByEmailAsync(superUser.Email);
@@ -88,8 +90,7 @@ namespace JobHunt.Database
                     await _userManager.CreateAsync(superUser, "Password@123");
                     var result = await _userManager.AddToRoleAsync(superUser, "Administrator");
                 }
-                else
-                    superUserInDb.IsActive = true;
+               
             }).GetAwaiter().GetResult();
         }
 
