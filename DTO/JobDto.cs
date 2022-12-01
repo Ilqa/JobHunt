@@ -20,11 +20,11 @@ namespace JobHunt.DTO
         
         public int PostedById { get; set; }
 
-        public bool IsPublished { get; set; }
+        public bool IsPublished { get; set; } 
 
         public bool IsActive { get; set; }
 
-        public bool IsHidden { get; set; }
+        public bool IsHidden { get; set; } 
 
     }
 

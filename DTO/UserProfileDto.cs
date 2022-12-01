@@ -30,7 +30,7 @@ namespace JobHunt.DTO
 
         public string ProfileHeadline { get; set; }
         public string PhoneNumber { get; set; }
-        public string Skills { get; set; }
+        public List<UserSkillDto> Skills { get; set; }
         public string FirstName { get; internal set; }
         public string LastName { get; internal set; }
 

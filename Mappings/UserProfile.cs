@@ -27,6 +27,7 @@ namespace JobHunt.Mappings
             CreateMap<UserEducation, UserEducationDto>().ReverseMap();
             CreateMap<UserExperience, UserExperienceDto>().ReverseMap();
             CreateMap<UserTypeDto, UserType>().ReverseMap();
+            CreateMap<UserSkillDto, UserSkill>().ReverseMap();
         }
     }
 }

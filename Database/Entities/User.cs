@@ -10,7 +10,7 @@ namespace JobHunt.Database.Entities
 
         [MaxLength(256)]
         public string LastName { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } 
 
 
         //public string CreatedBy { get; set; }
