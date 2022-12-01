@@ -32,11 +32,17 @@ namespace JobHunt.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserProfile(UserProfileDto profile) => Ok(await _service.CreateProfileAsync(profile));
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserProfile(UserProfileDto profile) => Ok(await _service.UpdateProfileAsync(profile));
+
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetProfile(int userId) => Ok(await _service.GetProfileAsync(userId));
 
         [HttpPost("UploadFile")]
         public async Task<IActionResult> UploadFileResume(IFormFile file, int userId) => Ok(await _service.UploadFile(userId, file));
+
+        [HttpPost("UploadProfilePicture")]
+        public async Task<IActionResult> UploadProfilePicture(IFormFile file, int userId) => Ok(await _service.UploadFile(userId, file));
 
         //[HttpGet("GetVideo")]
         //public async Task<FileContentResult> GetVideo(int userId)

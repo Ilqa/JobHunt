@@ -28,10 +28,9 @@ namespace JobHunt.Database.Repositories
 
         public async Task CreateProfileAsync(UserProfile profile) => await _repository.AddAsync(profile);// await _unitOfWork.Commit();
 
-        public async Task<UserProfile> GetProfileAsync(int userId)
-        {
-            return _repository.Entities.Include(p => p.User).Include(p => p.JobHistory).Include(p=> p.EducationDetails).FirstOrDefault(p => p.UserId == userId);
-        }
+        public async Task<UserProfile> GetByIdAsync(int id) => _repository.Entities.Include(p => p.User).Include(p => p.JobHistory).Include(p => p.EducationDetails).FirstOrDefault(p => p.Id == id);
+
+        public async Task<UserProfile> GetProfileByUserIdAsync(int userId) => _repository.Entities.Include(p => p.User).Include(p => p.JobHistory).Include(p => p.EducationDetails).FirstOrDefault(p => p.UserId == userId);
 
         public async Task UpdateProfileAsync(UserProfile profile)
         {

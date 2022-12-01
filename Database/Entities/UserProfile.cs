@@ -25,9 +25,13 @@ namespace JobHunt.Database.Entities
 
         public string VideoFileName{ get; set; }
 
+        public string ProfileImageName { get; set; }
+
         public byte[] ResumeFileData { get; set; }
 
         public byte[] VideoFileData { get; set; }
+
+        public byte[] ProfileImageData { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }

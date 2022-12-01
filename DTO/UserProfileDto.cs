@@ -6,6 +6,9 @@ namespace JobHunt.DTO
 {
     public class UserProfileDto
     {
+
+        public int Id { get; set; }
+
         [MaxLength(256)]
         public string Region { get; set; }
         [MaxLength(256)]

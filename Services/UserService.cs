@@ -228,7 +228,13 @@ namespace JobHunt.Services
 
         public async Task<IResult> UpdateProfileAsync(UserProfileDto profile)
         {
-            await _repository.UpdateProfileAsync(_mapper.Map<UserProfile>(profile));
+            var profileDb = await _repository.GetByIdAsync(profile.Id);
+            if (profileDb == null)
+                return Result<long>.Fail($"Profile Not Found.");
+
+            _mapper.Map(profile, profileDb);
+           // var updatedProfile = _mapper.Map<UserProfile>(profile);
+            await _repository.UpdateProfileAsync(profileDb);
             await _unitOfWork.Commit();
             return await Result.SuccessAsync($"Profile Updated for User:{profile.UserId}");
         }
@@ -237,7 +243,7 @@ namespace JobHunt.Services
         {
             var profile = _repository.Profiles.FirstOrDefault(p => p.UserId == userId);
             if (profile == null)
-                return await Result.FailAsync($"User Not found");
+                return await Result.FailAsync($"User Profile Not found");
 
             FileInfo info = new(file.FileName);
             var fileType = FileHandling.GetFiletype(info.Extension);
@@ -279,9 +285,48 @@ namespace JobHunt.Services
             return await Result.SuccessAsync($"File Uploaded Successfully");
         }
 
+        public async Task<IResult> UploadProfilePicture(int userId, IFormFile file)
+        {
+            var profile = _repository.Profiles.FirstOrDefault(p => p.UserId == userId);
+            if (profile == null)
+                return await Result.FailAsync($"User Profile Not found");
+
+            FileInfo info = new(file.FileName);
+            var fileType = FileHandling.GetFiletype(info.Extension);
+            if (fileType != Enums.FileType.Image)
+                return await Result.FailAsync($"Invalid File Type");
+
+            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location[..Assembly.GetEntryAssembly().Location.IndexOf("bin\\")]);
+            path += "/JobHuntFiles/ProfilePictures";
+            //var path2 = Directory.GetCurrentDirectory();
+
+            //"D:\\JobHuntFiles";  //_appConfig.FilePAth;
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            //file size 2mb limit?|
+            using var dataStream = new MemoryStream();
+
+            await file.CopyToAsync(dataStream);
+            var imageData = dataStream.ToArray();
+
+           
+                profile.ProfileImageData = imageData;
+                profile.ProfileImageName = FileHandling.ConvertImageName(file.FileName, userId);
+                using FileStream fileStream = new(Path.Combine(path, profile.VideoFileName), FileMode.Create);
+                await file.CopyToAsync(fileStream);
+           
+
+            await _repository.UpdateProfileAsync(profile);
+            await _unitOfWork.Commit();
+
+            return await Result.SuccessAsync($"Image Uploaded Successfully");
+        }
+
+
         public async Task<Result<UserProfileDto>> GetProfileAsync(int userId)
         {
-            var profile = await _repository.GetProfileAsync(userId);
+            var profile = await _repository.GetProfileByUserIdAsync(userId);
            return await Result<UserProfileDto>.SuccessAsync(_mapper.Map<UserProfileDto>(profile));
         }
 

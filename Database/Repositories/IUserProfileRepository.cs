@@ -13,6 +13,7 @@ namespace JobHunt.Database.Repositories
         //Task<int?> GetProfileIdByUserID(int userId);
         Task UpdateProfileAsync(UserProfile profile);
        // Task<string> UploadFile(int userId, IFormFile file);
-        Task<UserProfile> GetProfileAsync(int userId);
+        Task<UserProfile> GetProfileByUserIdAsync(int userId);
+        Task<UserProfile> GetByIdAsync(int id);
     }
 }

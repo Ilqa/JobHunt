@@ -23,6 +23,15 @@ namespace JobHunt.Helpers
             return builder.ToString();
         }
 
+        public static string ConvertImageName(string filename, int userid)
+        {
+            var builder = new StringBuilder(userid.ToString());
+            builder.Append('_');
+            builder.Append("Image_");
+            builder.Append(filename);
+            return builder.ToString();
+        }
+
         public static FileType GetFiletype(string fileExtension)
         {
             return fileExtension switch
@@ -30,6 +39,9 @@ namespace JobHunt.Helpers
                 ".mp4" => FileType.Video,
                 ".docx" => FileType.Document,
                 ".pdf" => FileType.PDF,
+                ".JPEG" => FileType.Image,
+                ".JPG" => FileType.Image,
+                ".Png" => FileType.Image,
                 _ => FileType.Invalid,
             };
         }
