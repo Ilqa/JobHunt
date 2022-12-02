@@ -32,7 +32,7 @@ namespace JobHunt.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserProfile(UserProfileDto profile) => Ok(await _service.CreateProfileAsync(profile));
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdateUserProfile(UserProfileDto profile) => Ok(await _service.UpdateProfileAsync(profile));
 
         [HttpGet("{userId}")]
