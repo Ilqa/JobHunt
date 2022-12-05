@@ -17,11 +17,15 @@ namespace JobHunt.Database
 
         public DbSet<Company> Companies { get; set; }
 
+
         public DbSet<Job> Jobs { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserEducation> UserEducation { get; set; }
         public DbSet<UserExperience> UserExperiences { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<City> Cities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +33,9 @@ namespace JobHunt.Database
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<JobSkill>().HasKey(lp => new { lp.SkillId, lp.JobId });
             modelBuilder.Entity<UserSkill>().HasKey(lp => new { lp.SkillId, lp.ProfileId });
+            modelBuilder.Entity<Country>().Metadata.SetIsTableExcludedFromMigrations(true);
+            modelBuilder.Entity<State>().Metadata.SetIsTableExcludedFromMigrations(true);
+            modelBuilder.Entity<City>().Metadata.SetIsTableExcludedFromMigrations(true);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
