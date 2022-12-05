@@ -138,6 +138,8 @@ namespace JobHunt
             services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<IJobService, JobService>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+            services.AddTransient<IStateRepository, StateRepository>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
             //services.RegisterType<QueryObject>().AsSelf().SingleInstance();
@@ -153,7 +155,7 @@ namespace JobHunt
             {
                 app.UseDeveloperExceptionPage();
             }
-
+0.0
 
 
 
@@ -162,6 +164,7 @@ namespace JobHunt
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "JobHunt.API v1");
             });
+            //app.UseDeveloperExceptionPage();
             app.UseCors("AllowOrigin");
             //app.UseGraphQL<MovieReviewSchema>();
             // Enables Altair UI at path /
