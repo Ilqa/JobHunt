@@ -30,7 +30,7 @@ namespace JobHunt.Wrappers
 
         public static IResult Success(string message) => new Result { Succeeded = true, Messages = new List<string> { message } };
 
-        public static Task<IResult> SuccessAsync() => Task.FromResult(Success());
+        public static Task<IResult> SuccessAsync(Task<List<Database.Entities.State>> task) => Task.FromResult(Success());
 
         public static Task<IResult> SuccessAsync(string message) => Task.FromResult(Success(message));
     }
@@ -65,7 +65,7 @@ namespace JobHunt.Wrappers
 
         public static Result<T> Success(T data, List<string> messages) => new Result<T> { Succeeded = true, Data = data, Messages = messages };
 
-        public new static Task<Result<T>> SuccessAsync() => Task.FromResult(Success());
+      //  public new static Task<Result<T>> SuccessAsync(Task<List<T>> task) => Task.FromResult(Success());
 
         public new static Task<Result<T>> SuccessAsync(string message) => Task.FromResult(Success(message));
 

@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace JobHunt.Database.Repositories
 {
-    public interface IStateRepository
+    public interface ICityRepository
     {
-        IQueryable<State> States { get; }
+        IQueryable<City> Countries { get; }
 
        // Task AddCompany(Company company);
         //Task<int?> GetProfileIdByUserID(int userId);
        // Task UpdateProfileAsync(UserProfile profile);
         //Task<string> UploadFile(int userId, IFormFile file);
-        //Task<List<State>> GetAllCountryStates();
+       // Task<List<City>> GetAllCountries();
 
-        Task<List<State>> GetFilteredStates(int countryId, string searchText);
+        Task<List<City>> GetFilteredCities(int countryId, int? stateId, string searchText);
     }
 }

@@ -16,15 +16,21 @@ namespace JobHunt.Services
         private readonly ISkillRepository _skillRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly RoleManager<UserType> _roleManager;
+        private readonly ICountryRepository _countryRepository;
+        private readonly IStateRepository _stateRepository;
+        private readonly ICityRepository _cityRepository;
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public ReferenceDataService(ISkillRepository skillRepository, ICompanyRepository companyRepositor, RoleManager<UserType> roleManager, IMapper mapper, IUnitOfWork unitOfWork)
+        public ReferenceDataService(ISkillRepository skillRepository, ICompanyRepository companyRepositor, RoleManager<UserType> roleManager, IMapper mapper, IUnitOfWork unitOfWork, ICountryRepository countryRepository, IStateRepository stateRepository, ICityRepository cityRepository)
         {
             _skillRepository = skillRepository;
             _companyRepository = companyRepositor;
             _mapper = mapper;
             _roleManager = roleManager;
+            _countryRepository = countryRepository;
+            _stateRepository = stateRepository;
+            _cityRepository = cityRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -61,5 +67,14 @@ namespace JobHunt.Services
             var roles = await _roleManager.Roles.ToListAsync();
             return await Result<List<UserTypeDto>>.SuccessAsync(_mapper.Map<List<UserTypeDto>>(roles));
         }
+
+
+       
+        public async Task<Result<List<Country>>> GetCountries(string searchText) => await Result<List<Country>>.SuccessAsync(_countryRepository.GetFilteredCountries(searchText).Result);
+
+        public async Task<Result<List<State>>> GetStates(int countryId, string searchText) => await Result<List<State>>.SuccessAsync(_stateRepository.GetFilteredStates(countryId, searchText).Result);
+
+        public async Task<Result<List<City>>> GetCities(int countryId, int? stateId, string searchText) => await Result<List<City>>.SuccessAsync(_cityRepository.GetFilteredCities(countryId, stateId, searchText).Result);
+
     }
 }

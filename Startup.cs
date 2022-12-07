@@ -20,10 +20,7 @@ namespace JobHunt
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -139,6 +136,7 @@ namespace JobHunt
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<IJobService, JobService>();
             services.AddTransient<ICountryRepository, CountryRepository>();
+            services.AddTransient<ICityRepository, CityRepository>();
             services.AddTransient<IStateRepository, StateRepository>();
 
             //services.RegisterType<DocumentWriter>().AsImplementedInterfaces().SingleInstance();
@@ -155,7 +153,6 @@ namespace JobHunt
             {
                 app.UseDeveloperExceptionPage();
             }
-0.0
 
 
 

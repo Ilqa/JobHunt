@@ -23,9 +23,9 @@ namespace JobHunt.Database
         public DbSet<UserEducation> UserEducation { get; set; }
         public DbSet<UserExperience> UserExperiences { get; set; }
         public DbSet<Skill> Skills { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<State> States { get; set; }
-        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> countries { get; set; }
+        public DbSet<State> states { get; set; }
+        public DbSet<City> cities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

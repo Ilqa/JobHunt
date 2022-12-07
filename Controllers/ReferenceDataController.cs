@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace JobHunt.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/ReferenceData")]
     [ApiController]
     public class ReferenceDataController : ControllerBase
@@ -37,5 +37,14 @@ namespace JobHunt.Controllers
 
         [HttpPost("Company")]
         public async Task<IActionResult> AddCompany(CompanyDto company) => Ok(await _service.AddCompany(company));
+
+        [HttpGet("Countries")]
+        public async Task<IActionResult> GetCountires(string searchText) => Ok(await _service.GetCountries(searchText));
+
+        [HttpGet("States")]
+        public async Task<IActionResult> GetStates(int countryId, string searchText) => Ok(await _service.GetStates(countryId, searchText));
+
+        [HttpGet("Cities")]
+        public async Task<IActionResult> GetCities(int countryId, int? stateId, string searchText) => Ok(await _service.GetCities(countryId, stateId, searchText));
     }
 }

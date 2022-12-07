@@ -50,7 +50,7 @@ namespace MovieReviews.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.Job", b =>
@@ -100,7 +100,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("PostedById");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.JobSkill", b =>
@@ -115,7 +115,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("JobSkill");
+                    b.ToTable("JobSkill", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.Skill", b =>
@@ -131,7 +131,7 @@ namespace MovieReviews.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.User", b =>
@@ -250,7 +250,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserEducation");
+                    b.ToTable("UserEducation", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.UserExperience", b =>
@@ -293,7 +293,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserExperiences");
+                    b.ToTable("UserExperiences", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.UserProfile", b =>
@@ -360,7 +360,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.UserSkill", b =>
@@ -375,7 +375,7 @@ namespace MovieReviews.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("UserSkill");
+                    b.ToTable("UserSkill", (string)null);
                 });
 
             modelBuilder.Entity("JobHunt.Database.Entities.UserType", b =>
