@@ -31,8 +31,8 @@ namespace JobHunt.Controllers
         public async Task<IActionResult> DeletJob(int jobId) => Ok(await _service.RemoveJob(jobId));
 
 
-        [HttpGet("GetByCity")]
-        public async Task<IActionResult> GetJobsForCity(string city) => Ok(await _service.GetJobsForCity(city));
+        [HttpGet("GetFilteredJobs")]
+        public async Task<IActionResult> GetFilteredJobs(JobSearchFilter filter) => Ok(await _service.GetFilteredJobs(filter));
         
 
         [HttpGet("GetById")]

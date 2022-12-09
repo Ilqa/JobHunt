@@ -28,7 +28,7 @@ namespace JobHunt.Database.Repositories
             if(stateId.HasValue)
                 filteredCities = filteredCities.Where(c=> c.state_id == stateId).ToList();
             if(searchText.IsNotNullOrEmpty())
-                filteredCities = filteredCities.Where(c => c.name.StartsWith(searchText)).ToList();
+                filteredCities = filteredCities.Where(c => c.name.StartsWithIgnoreCase(searchText)).ToList();
             return filteredCities;
 
         } 

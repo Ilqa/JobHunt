@@ -43,8 +43,6 @@ namespace JobHunt.Database.Repositories
    
         }
 
-        public async Task<List<Job>> GetJobsForCity(string city) => await Jobs.Where(j => j.City.Equals(city)).ToListAsync();
-
         public async Task<Job> GetJobById(int Id) => await Jobs.FirstOrDefaultAsync(j => j.Id == Id);
 
         public async Task PublishOrUnpublishJob(int jobId)

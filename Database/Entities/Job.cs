@@ -9,7 +9,7 @@ namespace JobHunt.Database.Entities
         public int Id { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
-        public string City { get; set; }
+       // public string City { get; set; }
 
         public int ViewCount { get; set; }
 
@@ -30,6 +30,12 @@ namespace JobHunt.Database.Entities
         public bool IsActive { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public int CountryId { get; set; }
+
+        public int StateId { get; set; }
+
+        public int CityId { get; set; }
 
     }
 }

@@ -40,7 +40,7 @@ namespace JobHunt.Database.Entities
 
         public string Title { get; set; }
 
-        public string City { get; set; }
+       // public string City { get; set; }
 
         public string ProfileHeadline { get; set; }
 
@@ -52,7 +52,11 @@ namespace JobHunt.Database.Entities
 
          public List<UserExperience> JobHistory { get; set; }
 
+        public int CountryId { get; set; }
 
+        public int StateId { get; set; }
+
+        public int CityId { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace JobHunt.Services
         Task<IResult> HideOrUnhideJob(int jobId);
         Task<List<JobDto>> GetJobsForLocations(List<int> locationIds);
         Task<List<JobDto>> GetAllJobs();
-        Task<List<JobDto>> GetJobsForCity(string city);
+        Task<List<JobDto>> GetFilteredJobs(JobSearchFilter filter);
         Task<JobDto> GetJobById(int id);
     }
 }

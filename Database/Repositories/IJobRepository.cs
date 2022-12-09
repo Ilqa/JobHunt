@@ -15,13 +15,9 @@ namespace JobHunt.Database.Repositories
         Task PublishOrUnpublishJob(int jobId);
         Task RemoveJob(int jobId);
         Task HideOrUnhideJob(int jobId);
-        //IQueryable<Job> GetAllJobs();
         Task<List<Job>> GetJobsForLocations(List<int> locationIds);
-        //Task<int?> GetProfileIdByUserID(int userId);
-        // Task UpdateProfileAsync(UserProfile profile);
-        //Task<string> UploadFile(int userId, IFormFile file);
+       
         Task<List<Job>> GetAllJobs();
-        Task<List<Job>> GetJobsForCity(string city);
         Task<Job> GetJobById(int id);
     }
 }

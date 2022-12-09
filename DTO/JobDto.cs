@@ -8,24 +8,27 @@ namespace JobHunt.DTO
         public int Id { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
-        public string City { get; set; }
+        //public string City { get; set; }
 
         public int ViewCount { get; set; }
 
-        
         public int? CompanyId { get; set; }
        
         public List<JobSkillDto> RequiredSKills { get; set; }
 
-        
         public int PostedById { get; set; }
 
         public bool IsPublished { get; set; } 
 
         public bool IsActive { get; set; }
 
-        public bool IsHidden { get; set; } 
+        public bool IsHidden { get; set; }
 
+        public int CountryId { get; set; }
+
+        public int StateId { get; set; }
+
+        public int CityId { get; set; }
     }
 
     public class JobSkillDto

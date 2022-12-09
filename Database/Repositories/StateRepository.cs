@@ -21,7 +21,7 @@ namespace JobHunt.Database.Repositories
             var filteredStates = await _repository.Entities.Where(c => c.country_id == countryId).ToListAsync();
             
             if (searchText.IsNotNullOrEmpty())
-                filteredStates = filteredStates.Where(c => c.name.StartsWith(searchText)).ToList();
+                filteredStates = filteredStates.Where(c => c.name.StartsWithIgnoreCase(searchText)).ToList();
 
             return filteredStates;
         }

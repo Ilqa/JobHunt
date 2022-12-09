@@ -20,14 +20,9 @@ namespace JobHunt.Controllers
     public class UserProfileController : ControllerBase
     {
 
-       // private readonly IMapper _mapper;
         private readonly IUserService _service;
 
-        public UserProfileController(IUserService service)
-        {
-            _service = service;// = repository;  
-            //_mapper = mapper;
-        }
+        public UserProfileController(IUserService service) => _service = service;
 
         [HttpPost]
         public async Task<IActionResult> CreateUserProfile(UserProfileDto profile) => Ok(await _service.CreateProfileAsync(profile));

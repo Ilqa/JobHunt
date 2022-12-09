@@ -23,7 +23,7 @@ namespace JobHunt.Database.Repositories
             var countries = await _repository.Entities.ToListAsync();
            
             if(searchText.IsNotNullOrEmpty())
-                countries = countries.Where(c => c.name.StartsWith(searchText)).ToList();
+                countries = countries.Where(c => c.name.StartsWithIgnoreCase(searchText)).ToList();
 
             return countries;
         }

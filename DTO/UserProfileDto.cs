@@ -29,7 +29,7 @@ namespace JobHunt.DTO
 
         public string Title { get; set; }
 
-        public string City { get; set; }
+       // public string City { get; set; }
 
         public string ProfileHeadline { get; set; }
         public string PhoneNumber { get; set; }
@@ -41,5 +41,11 @@ namespace JobHunt.DTO
 
         public List<UserExperienceDto> JobHistory { get; set; }
         public string Email { get; internal set; }
+
+        public int CountryId { get; set; }
+
+        public int StateId { get; set; }
+
+        public int CityId { get; set; }
     }
 }

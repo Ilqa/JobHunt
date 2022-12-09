@@ -4,6 +4,7 @@ using JobHunt.Database.Repositories;
 using JobHunt.DTO;
 using JobHunt.Wrappers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobHunt.Services
@@ -40,9 +41,21 @@ namespace JobHunt.Services
             return _mapper.Map<JobDto>(job);
         }
 
-        public async Task<List<JobDto>> GetJobsForCity(string city)
+        public async Task<List<JobDto>> GetFilteredJobs(JobSearchFilter filter)
         {
-            var jobs = await _repository.GetJobsForCity(city);
+            List<Job> jobs = new();
+            if (filter.CityIds.Any())
+                jobs = _repository.Jobs.ToList().Where(j => filter.CityIds.Contains(j.CityId)).ToList();
+            else if (filter.StateIds.Any())
+                jobs = _repository.Jobs.ToList().Where(j => filter.StateIds.Contains(j.StateId)).ToList();
+            else if (filter.CountryIds.Any())
+                jobs = _repository.Jobs.ToList().Where(j => filter.CountryIds.Contains(j.CountryId)).ToList();
+            else jobs = _repository.Jobs.ToList();
+
+            if(filter.Titles.Any())
+                jobs = jobs.Where(j => filter.Titles.Contains(j.Title)).ToList();
+
+
             return _mapper.Map<List<JobDto>>(jobs);
         }
 

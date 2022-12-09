@@ -83,15 +83,15 @@ namespace JobHunt.Services
                 ? _userManager.Users
                 : _userManager.Users.Where(p => p.UserName.Contains(searchText));
 
-            var sortedUsers = filteredUsers.Where(u => u.IsActive).OrderBy($"{sortField} {sortOrder}");
+            var sortedUsers = filteredUsers.OrderBy($"{sortField} {sortOrder}");
             var userResponses = sortedUsers.Select(l => _mapper.Map<UserDto>(l)).ToPaginatedListAsync(pageNumber, pageSize);
 
-            foreach (var mappedUser in userResponses.Result.Data)
-            {
-                var user = sortedUsers.First(u => u.Id.Equals(mappedUser.Id));
-                var roles = await _userManager.GetRolesAsync(user);
-                mappedUser.Roles = roles.ToList();
-            }
+            //foreach (var mappedUser in userResponses.Result.Data)
+            //{
+            //    var user = sortedUsers.First(u => u.Id.Equals(mappedUser.Id));
+            //    var roles = await _userManager.GetRolesAsync(user);
+            //    mappedUser.Roles = roles.ToList();
+            //}
 
             return await userResponses;
 
