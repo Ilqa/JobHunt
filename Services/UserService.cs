@@ -184,7 +184,12 @@ namespace JobHunt.Services
 
         public async Task<Result<TokenResponse>> Login(TokenRequest model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            User user = null;
+            if(model.Email.IsNotNullOrEmpty())
+                 user = await _userManager.FindByEmailAsync(model.Email);
+            if(model.UserName.IsNotNullOrEmpty())
+                 user = await _userManager.FindByNameAsync(model.UserName);
+
             if (user == null)
                 return await Result<TokenResponse>.FailAsync("User Not Found.");
 
@@ -215,7 +220,7 @@ namespace JobHunt.Services
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
-            TokenResponse response = new() { Token = new JwtSecurityTokenHandler().WriteToken(token), IsLoginSuccessful = true, UserId = user.Id };
+            TokenResponse response = new() { Token = new JwtSecurityTokenHandler().WriteToken(token), UserId = user.Id, Role = userRoles.FirstOrDefault() };
             return await Result<TokenResponse>.SuccessAsync(response);
         }
 

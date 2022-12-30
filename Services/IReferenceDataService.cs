@@ -18,5 +18,7 @@ namespace JobHunt.Services
         Task<Result<List<State>>> GetStates(int countryId, string searchText);// => await Result<List<State>>.SuccessAsync(_stateRepository.GetFilteredStates(countryId, searchText).Result);
 
         Task<Result<List<City>>> GetCities(int countryId, int? stateId, string searchText);
+
+        Result<List<string>> GetFeaturedFiles();
     }
 }

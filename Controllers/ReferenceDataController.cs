@@ -46,5 +46,10 @@ namespace JobHunt.Controllers
 
         [HttpGet("Cities")]
         public async Task<IActionResult> GetCities(int countryId, int? stateId, string searchText) => Ok(await _service.GetCities(countryId, stateId, searchText));
+        
+        [AllowAnonymous]
+        [HttpGet("FeaturedFiles")]
+        public async Task<IActionResult> GetFeaturedFiles() => Ok(_service.GetFeaturedFiles());
     }
+
 }

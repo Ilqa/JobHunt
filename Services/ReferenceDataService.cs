@@ -3,6 +3,7 @@ using JobHunt.Database.Entities;
 using JobHunt.Database.Repositories;
 using JobHunt.DTO;
 using JobHunt.Wrappers;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -67,14 +68,16 @@ namespace JobHunt.Services
             var roles = await _roleManager.Roles.ToListAsync();
             return await Result<List<UserTypeDto>>.SuccessAsync(_mapper.Map<List<UserTypeDto>>(roles));
         }
-
-
-       
+     
         public async Task<Result<List<Country>>> GetCountries(string searchText) => await Result<List<Country>>.SuccessAsync(_countryRepository.GetFilteredCountries(searchText).Result);
 
         public async Task<Result<List<State>>> GetStates(int countryId, string searchText) => await Result<List<State>>.SuccessAsync(_stateRepository.GetFilteredStates(countryId, searchText).Result);
 
         public async Task<Result<List<City>>> GetCities(int countryId, int? stateId, string searchText) => await Result<List<City>>.SuccessAsync(_cityRepository.GetFilteredCities(countryId, stateId, searchText).Result);
 
+        public Result<List<string>> GetFeaturedFiles()
+        {
+            return Result<List<string>>.Success(new List<string>() { "https://youtu.be/PYuPmNFHTog" });
+        }
     }
 }
