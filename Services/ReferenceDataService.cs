@@ -77,7 +77,7 @@ namespace JobHunt.Services
 
         public Result<List<string>> GetFeaturedFiles()
         {
-            return Result<List<string>>.Success(new List<string>() { "https://youtu.be/PYuPmNFHTog" });
+            return Result<List<string>>.Success(new List<string>() { "https://www.youtube.com/watch?v=naIkpQ_cIt0", "https://www.youtube.com/watch?v=Pt2ZZBZ4Mow", "https://youtu.be/PYuPmNFHTog" });
         }
     }
 }
